@@ -1,144 +1,193 @@
-/* Global reset & box sizing */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ======================================
+   NASA Space Explorer – Final Styling
+   ====================================== */
+
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --nasa-blue:#0B3D91;
+  --nasa-red:#E03C31;
+  --ink:#f9fafb;
+  --muted:#9ca3af;
+  --card-bg:rgba(255,255,255,0.08);
 }
 
-/* Base page styles */
+/* Space background */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #f9fafb;
+  background-color: #000;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 80% 40%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 10% 80%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(2px 2px at 65% 20%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 90%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 30% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 55% 60%, rgba(255,255,255,0.9) 0%, transparent 100%);
+  background-repeat: repeat;
+  background-size: 600px 600px;
+  animation: twinkle 120s linear infinite;
+  min-height: 100vh;
   padding: 20px;
 }
 
-/* Centered container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* Soft twinkling motion for the stars */
+@keyframes twinkle {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 1000px 500px, -800px 200px, 400px -600px; }
 }
+
+
+/* Star overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: transparent url('https://cdn.jsdelivr.net/gh/GCA-Classroom/assets/stars-bg.png') repeat;
+  opacity: 0.15;
+  z-index: -1;
+  animation: twinkle 120s linear infinite;
+}
+@keyframes twinkle {
+  from { background-position: 0 0; }
+  to { background-position: 10000px 5000px; }
+}
+
+/* Container */
+.container { max-width: 1200px; margin: 0 auto; }
 
 /* Header */
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:10px 0 8px;
+  margin-bottom:12px;
+}
+.logo{
+  display:block;
+  height:64px;
+  width:auto;
+}
+.site-title{
+  font-weight:800;
+  letter-spacing:.2px;
+  color: var(--ink);
+  margin:0;
 }
 
-h1 {
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
-  color: #212121;
-}
-
-/* Logo */
-.logo {
-  width: 140px;
-  margin-right: 15px;
-}
-
-/* Date‐picker & button row */
+/* Filters */
 .filters {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-  padding: 0 20px;
+  display: flex; flex-direction: column; gap: 10px;
+  justify-content: center; margin-bottom: 12px;
 }
+input[type="date"]{
+  font: inherit; color: #111827;
+  padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 10px;
+  background: #fff; min-width: 220px;
+}
+.btn-primary{
+  padding: 10px 16px; border-radius: 10px; font-weight: 800;
+  letter-spacing: .2px; cursor: pointer;
+  background: var(--nasa-blue); color: #fff; border: 1px solid var(--nasa-blue);
+}
+.btn-primary:hover{ filter: brightness(.95); }
 
-/* Inputs and buttons */
-input[type="date"],
-button {
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  color: #666;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  line-height: 1.4;
-  width: 100%;
-}
+@media (min-width:640px){ .filters{ flex-direction: row; } }
 
-/* Button specific */
-button {
-  background-color: #d3d3d3;
-  color: black;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #bfbfbf;
-}
+/* Status */
+.status{ text-align:center; min-height: 28px; }
+.note { color: #e2e8f0; text-align:center; margin: 8px 0 4px; }
+.loading{ color: var(--muted); padding: 8px 0 4px; }
 
-/* Stack horizontally on wider screens */
-@media (min-width: 600px) {
-  .filters {
-    flex-direction: row;
-    padding: 0;
-  }
-  
-  input[type="date"],
-  button {
-    width: auto;
-  }
-}
-
-/* Gallery flex container */
+/* Gallery */
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: center;
+  display: flex; flex-wrap: wrap; gap: 20px; padding: 8px; justify-content: center;
 }
 
-/* Gallery items */
-.gallery-item {
-  flex: 1 1 100%;  /* full width by default */
-  min-width: 280px;
-  max-width: 500px;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+/* Card */
+.gallery-item{
+  flex: 1 1 100%; min-width: 280px; max-width: 500px;
+  background: var(--card-bg); padding: 12px; border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(2,8,20,0.7);
+  overflow: hidden; display: flex; flex-direction: column; cursor: pointer;
+  transition: transform .08s ease;
+}
+.gallery-item:hover .thumb-wrap img{ transform: scale(1.05); }
+@media (min-width:1000px){ .gallery-item{ flex: 0 1 31%; } }
+
+.thumb-wrap{ position: relative; overflow: hidden; border-radius: 12px; }
+.thumb-wrap img{
+  width: 100%; height: 220px; object-fit: cover; display: block;
+  transition: transform .35s ease;
+}
+.play-badge{
+  position: absolute; right: 10px; bottom: 10px;
+  background: rgba(0,0,0,.6); color: #fff; border-radius: 999px;
+  padding: 6px 10px; font-weight: 700; font-size: 14px;
 }
 
-/* Three columns on wider screens */
-@media (min-width: 1000px) {
-  .gallery-item {
-    flex: 0 1 31%;
-  }
+.card-title{ margin-top: 10px; font-size: 18px; font-weight: 800; color: #fff; }
+.card-date{ margin-top: 4px; font-size: 14px; color: var(--muted); }
+
+/* Missing-day placeholder */
+.gallery-item.missing .card-title{ color:#9ca3af; }
+.missing-box{
+  height:220px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background: repeating-linear-gradient(45deg, #1e1e2a, #1e1e2a 10px, #232334 10px, #232334 20px);
+  color:#9ca3af; font-weight:700; text-align:center; padding:0 12px;
 }
 
-.gallery-item img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 4px;
+/* Modal */
+.modal[aria-hidden="true"]{ display:none; }
+.modal[aria-hidden="false"]{ display:block; }
+.modal-backdrop{ position: fixed; inset:0; background: rgba(0,0,0,0.7); }
+.modal-content{
+  position: fixed; inset: 5% 5% auto 5%;
+  background: #111827; color: #f3f4f6; border-radius: 16px; padding: 16px;
+  max-width: 980px; margin: auto; left: 0; right: 0;
+  box-shadow: 0 20px 60px rgba(0,0,0,.85);
 }
-
-.gallery-item p {
-  margin-top: 10px;
-  padding: 5px;
-  font-size: 14px;
+.modal-media img{
+  width: 100%; height: auto; border-radius: 10px;
+  max-height: 65vh; object-fit: contain;
 }
-
-/* Placeholder content */
-.placeholder {
-  flex: 1 1 100%;
-  text-align: center;
-  padding: 40px;
-  color: #666;
+.modal-title{ font-size: 22px; font-weight: 800; margin-top: 10px; color:#fff;}
+.modal-date{ color: var(--muted); margin-bottom: 8px; }
+.modal-expl{ line-height: 1.6; color:#e2e8f0;}
+.modal-close{
+  position: absolute; right: 12px; top: 8px;
+  width: 36px; height: 36px; border-radius: 999px;
+  border: none; background: var(--nasa-red); color: #fff;
+  font-size: 22px; font-weight: 700; cursor: pointer;
 }
+.modal-close:hover{ filter: brightness(.95); }
+.no-scroll{ overflow: hidden; }
 
-.placeholder-icon {
-  font-size: 48px;
-  margin-bottom: 20px;
+/* Toast */
+.fact-bar{ display:none; }
+.fact-toast {
+  position: fixed; right: 16px; bottom: 16px; z-index: 9999;
+  max-width: 420px; background: #0f172a;
+  border: 1px solid rgba(255,255,255,.15);
+  border-left: 6px solid var(--nasa-blue);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  padding: 14px 14px 12px 12px; color: #fff;
+}
+.fact-toast h3{ margin:0 0 6px 0; font-size:16px; font-weight:800; color:var(--nasa-blue);}
+.fact-toast p{ margin:0; line-height:1.45; font-size:14px; color:#e5e7eb;}
+.fact-toast-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:12px;}
+.fact-btn{ border:1px solid #d1d5db; background:#fff; color:var(--nasa-blue); font-weight:800; padding:8px 12px; border-radius:10px; cursor:pointer;}
+.fact-btn.primary{ background:var(--nasa-blue); color:#fff; border-color:var(--nasa-blue);}
+.fact-btn:hover{ filter:brightness(.97); }
+@keyframes factIn{from{transform:translateY(8px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes factOut{from{opacity:1;}to{opacity:0;}}
+@media(prefers-reduced-motion:no-preference){
+  .fact-toast.enter{animation:factIn .25s ease-out both;}
+  .fact-toast.exit{animation:factOut .18s ease-in both;}
 }
